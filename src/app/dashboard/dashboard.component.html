@@ -1,1 +1,29 @@
 <app-header></app-header>
+
+<div id="input-container">
+  <h2>Start eingeben:</h2>
+  <span class="material-symbols-outlined search">location_searching</span>
+  <input placeholder="Start">
+</div>
+
+<div class="containers">
+  <div class="container">
+    <h2>Gleis<span class="material-symbols-outlined">train</span></h2>
+    <span class="number">{{track}}</span>
+  </div>
+
+  <div class="container">
+    <h2>Haltestellen<span class="material-symbols-outlined">subway</span></h2>
+    <span class="number">{{stations}}</span>
+  </div>
+</div>
+
+<div class="container" id="info">
+  <span class="material-symbols-outlined">info</span>
+  <span id="info-text">Schüttle dein Handy oder tippe auf die Zahl, um eine neue Zahl zu würfeln.</span>
+</div>
+
+<div id="button-container">
+  <button>Neue Reise</button>
+  <button>Bisherige Reise</button>
+</div>
