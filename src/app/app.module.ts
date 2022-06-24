@@ -9,6 +9,8 @@ import { FooterComponent } from './component/footer/footer.component';
 import { PresentJourneyComponent } from './component/present-journey/present-journey.component';
 import { RoadmapComponent } from './component/roadmap/roadmap.component';
 import { FutureJourneyComponent } from './component/future-journey/future-journey.component';
+import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -20,10 +22,12 @@ import { FutureJourneyComponent } from './component/future-journey/future-journe
     RoadmapComponent,
     FutureJourneyComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

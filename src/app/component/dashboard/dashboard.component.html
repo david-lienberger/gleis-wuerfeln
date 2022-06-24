@@ -3,7 +3,7 @@
 <div id="input-container">
   <h2>Start eingeben:</h2>
   <span class="material-symbols-outlined search">location_searching</span>
-  <input placeholder="Start">
+  <input placeholder="Startpunkt" [(ngModel)]="currentStation" (ngModelChange)="getConnections()">
 </div>
 
 
