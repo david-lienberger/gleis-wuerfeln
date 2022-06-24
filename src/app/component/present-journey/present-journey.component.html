@@ -4,7 +4,6 @@
   <div class="container">
     <h2>Deine bisherige Reise</h2>
     <app-roadmap></app-roadmap>
-    <button>Neue Reise</button>
   </div>
 
   <div class="container" id="future-journey">
@@ -23,6 +22,7 @@
 </div>
 
 <div class="button-container">
+  <button (click)="newJourney()">Neue Reise</button>
   <a routerLink=""><button>Zurück</button></a>
 </div>
 
