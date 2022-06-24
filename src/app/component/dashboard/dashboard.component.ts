@@ -13,12 +13,30 @@ export class DashboardComponent implements OnInit {
   currentStation: string = '';
   currentStationObj: any;
 
-  highestTrack: number = 0;
   maxStations: number = 0;
+
+  tracks: number[] = [];
+
+  futureTrainTrack: string = localStorage.getItem('future-connection');
+  futureDestination: string = localStorage.getItem('future-station');
 
   constructor(private _dataService: DataService, private _apiService: TransportApiService) { }
 
   ngOnInit(): void {
+    localStorage.setItem('stations', JSON.stringify(
+      [{
+        name: "bern",
+        departure: "12:03",
+      },
+        {
+          name: "wichtrach",
+          departure: "13:45",
+        },
+        {
+          name: "thun",
+          departure: "14:14"
+        }]
+    ))
   }
 
   public newJourney(): void {
@@ -29,8 +47,10 @@ export class DashboardComponent implements OnInit {
   }
 
   public newTrack(): void {
-    let max = this.highestTrack;
-    this.track = Math.floor(Math.random() * (max - 1) + 1);
+    console.log(this.tracks)
+
+    let random = Math.floor(Math.random() * this.tracks.length);
+    this.track = this.tracks[random];
 
     for (let station of this.currentStationObj.stationboard) {
       if (parseInt(station.stop.platform) === this.track) {
@@ -41,28 +61,50 @@ export class DashboardComponent implements OnInit {
 
   public newStation(): void {
     let max = this.maxStations;
-    this.stations = Math.floor(Math.random() * (max - 1) + 1);
+    this.stations = Math.floor(Math.random() * (max) + 1);
+    this.getFutureJourneyInformation();
+  }
+
+  private getFutureJourneyInformation() {
+    for (let station of this.currentStationObj.stationboard) {
+      if (parseInt(station.stop.platform) === this.track) {
+        let departureTime: Date = new Date(station.stop.departure);
+        this.futureDestination = station.passList[this.stations].location.name;
+        this.futureTrainTrack = station.category.toString() + station.number.toString() + ", " +
+          DashboardComponent.displayTime(departureTime) + " Uhr, Gleis " + station.stop.platform;
+
+        this._dataService.setNextStation(this.futureDestination);
+        this._dataService.setNextTrack(this.futureTrainTrack);
+      }
+    }
   }
 
   public getConnections() {
-    this.highestTrack = 0;
+    this.tracks = [];
     this._apiService.getConnections(this.currentStation).subscribe((data) => {
       this.currentStationObj = data;
+      console.log(data)
       for (let station of data.stationboard) {
-        if (this.parseTrack(station.stop.platform) > this.highestTrack) {
-          this.highestTrack = station.stop.platform;
-        }
+        this.tracks.push(DashboardComponent.parseTrack(station.stop.platform));
       }
     })
   }
 
-  public parseTrack(track: string): number {
+  private static parseTrack(track: string): number {
     if (track.length === 1) {
       return parseInt(track);
     } else if (track[1].match("[a-zA-Z]")) {
       return parseInt(track[0]);
     } else {
       return (parseInt(track[0].toString() + track[1].toString()));
+    }
+  }
+
+  private static displayTime(time: Date): string {
+    if (time.getMinutes() >= 10) {
+      return 'XX:' + time.getMinutes();
+    } else {
+      return 'XX:0' + time.getMinutes();
     }
   }
 
