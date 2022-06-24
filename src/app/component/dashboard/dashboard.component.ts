@@ -11,8 +11,10 @@ export class DashboardComponent implements OnInit {
   track: number = 0;
   stations: number = 0;
   currentStation: string = '';
+  currentStationObj: any;
 
   highestTrack: number = 0;
+  maxStations: number = 0;
 
   constructor(private _dataService: DataService, private _apiService: TransportApiService) { }
 
@@ -29,30 +31,39 @@ export class DashboardComponent implements OnInit {
   public newTrack(): void {
     let max = this.highestTrack;
     this.track = Math.floor(Math.random() * (max - 1) + 1);
+
+    for (let station of this.currentStationObj.stationboard) {
+      if (parseInt(station.stop.platform) === this.track) {
+        this.maxStations = station.passList.length -1;
+      }
+    }
   }
 
   public newStation(): void {
-    let max = 10;
+    let max = this.maxStations;
     this.stations = Math.floor(Math.random() * (max - 1) + 1);
   }
 
   public getConnections() {
     this.highestTrack = 0;
     this._apiService.getConnections(this.currentStation).subscribe((data) => {
+      this.currentStationObj = data;
       for (let station of data.stationboard) {
-        if (station.stop.platform !== null && station.stop.platform.length > 3 && station.stop.platform[2] === '/') {
-          let track: string = station.stop.platform[0] + "" + station.stop.platform[1];
-
-          if (parseInt(track) > this.highestTrack) {
-            this.highestTrack = parseInt(track);
-          }
-        } else {
-          if (parseInt(station.stop.platform) > this.highestTrack) {
-            this.highestTrack = station.stop.platform;
-          }
+        if (this.parseTrack(station.stop.platform) > this.highestTrack) {
+          this.highestTrack = station.stop.platform;
         }
       }
     })
+  }
+
+  public parseTrack(track: string): number {
+    if (track.length === 1) {
+      return parseInt(track);
+    } else if (track[1].match("[a-zA-Z]")) {
+      return parseInt(track[0]);
+    } else {
+      return (parseInt(track[0].toString() + track[1].toString()));
+    }
   }
 
 }
