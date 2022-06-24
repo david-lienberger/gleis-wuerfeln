@@ -52,13 +52,9 @@
   margin-right: auto;
   display: flex;
   flex-direction: column;
+  padding-bottom: 2rem;
 }
 
-#button-container > button {
+#button-container > a {
   margin-top: 2rem;
-}
-
-app-footer {
-  position: relative;
-  top: 3rem;
 }

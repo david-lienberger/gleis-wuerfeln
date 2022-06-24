@@ -35,6 +35,7 @@ button {
   padding: 0.6rem 1.5rem;
   font-weight: 600;
   border-radius: 30px;
+  cursor: pointer;
 }
 
 h2 {
@@ -45,4 +46,17 @@ h2 {
 
 .material-symbols-outlined {
   margin: 0.5rem;
+}
+
+app-dashboard {
+  height: 100vh;
+}
+
+app-present-journey {
+  height: 100vh;
+}
+
+app-footer {
+  position: sticky;
+  bottom: 0;
 }
