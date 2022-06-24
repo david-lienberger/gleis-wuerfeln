@@ -6,15 +6,21 @@
   <input placeholder="Start">
 </div>
 
+
 <div class="containers">
   <div class="container">
-    <h2>Gleis<span class="material-symbols-outlined">train</span></h2>
-    <span class="number">{{track}}</span>
+    <app-roadmap [showDeparture]="false"></app-roadmap>
+    <div>
+      <h2>Gleis<span class="material-symbols-outlined">train</span></h2>
+      <span class="number">{{track}}</span>
+    </div>
   </div>
 
   <div class="container">
-    <h2>Haltestellen<span class="material-symbols-outlined">subway</span></h2>
-    <span class="number">{{stations}}</span>
+    <div>
+      <h2>Haltestellen<span class="material-symbols-outlined">subway</span></h2>
+      <span class="number">{{stations}}</span>
+    </div>
   </div>
 </div>
 
@@ -23,7 +29,7 @@
   <span id="info-text">Schüttle dein Handy oder tippe auf die Zahl, um eine neue Zahl zu würfeln.</span>
 </div>
 
-<div id="button-container">
+<div class="button-container">
   <button>Neue Reise</button>
   <a routerLink="present-journey"><button>Bisherige Reise</button></a>
 </div>

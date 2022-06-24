@@ -1,0 +1,37 @@
+.road-map {
+  display: flex;
+  flex-direction: column;
+}
+
+.circle {
+  height: 1em;
+  width: 1em;
+  border-radius: 50%;
+  background-color: #ffffff;
+  margin-right: 1rem;
+  border: var(--font-color) solid 1.5px;;
+}
+
+.station {
+  display: flex;
+  height: 3.5rem;
+}
+
+.station-name {
+  font-weight: 700;
+  font-size: 1.1em;
+}
+
+.departure {
+  font-size: 0.8em;
+  margin-left: 0.5rem;
+  margin-top: -0.5rem;
+}
+
+.line {
+  width: 0.1em;
+  background-color: #41335F;
+  position: relative;
+  left: 0.6rem;
+  z-index: -1;
+}

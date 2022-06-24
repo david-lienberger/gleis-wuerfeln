@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#future-journey {
+  margin-top: 2rem;
+}
+
+#title-text {
+  font-size: 0.8em;
+  position: relative;
+  top: -1.8rem;
+  left: -1rem;
+}
+
+.future-information {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+
+.button-container {
+  margin-top: 2rem;
+}

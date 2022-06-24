@@ -1,3 +1,29 @@
 <app-header></app-header>
-<app-roadmap></app-roadmap>
+
+<div id="containers">
+  <div class="container">
+    <h2>Deine bisherige Reise</h2>
+    <app-roadmap></app-roadmap>
+    <button>Neue Reise</button>
+  </div>
+
+  <div class="container" id="future-journey">
+    <h2>Deine Reise</h2>
+    <span id="title-text">geht wie folgt weiter:</span>
+    <div class="future-information">
+      <span class="material-symbols-outlined">train</span>
+      {{futureTrainTrack}}
+    </div>
+
+    <div class="future-information">
+      <span class="material-symbols-outlined">pin_drop</span>
+      {{futureDestination}}
+    </div>
+  </div>
+</div>
+
+<div class="button-container">
+  <a routerLink=""><button>Zurück</button></a>
+</div>
+
 

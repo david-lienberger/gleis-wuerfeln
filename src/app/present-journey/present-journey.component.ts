@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PresentJourneyComponent implements OnInit {
 
+  futureTrainTrack: string = 'S4, Gleis 3';
+  futureDestination: string = 'Rüti';
+
   constructor() { }
 
   ngOnInit(): void {
