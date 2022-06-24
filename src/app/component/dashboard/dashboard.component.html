@@ -9,19 +9,23 @@
 
 <div class="containers">
   <div class="container">
-    <app-roadmap [showDeparture]="false"></app-roadmap>
+<!--    <app-roadmap [showDeparture]="false"></app-roadmap>-->
     <div>
       <h2>Gleis<span class="material-symbols-outlined">train</span></h2>
-      <span class="number">{{track}}</span>
+      <span class="number" (click)="newTrack()">{{track}}</span>
     </div>
   </div>
 
   <div class="container">
     <div>
       <h2>Haltestellen<span class="material-symbols-outlined">subway</span></h2>
-      <span class="number">{{stations}}</span>
+      <span class="number" (click)="newStation()">{{stations}}</span>
     </div>
   </div>
+</div>
+
+<div class="future-journey-container">
+  <app-future-journey></app-future-journey>
 </div>
 
 <div class="container" id="info">
@@ -30,6 +34,6 @@
 </div>
 
 <div class="button-container">
-  <button>Neue Reise</button>
+  <button (click)="newJourney()">Neue Reise</button>
   <a routerLink="present-journey"><button>Bisherige Reise</button></a>
 </div>

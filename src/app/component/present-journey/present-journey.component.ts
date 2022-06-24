@@ -7,9 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PresentJourneyComponent implements OnInit {
 
-  futureTrainTrack: string = localStorage.getItem('future-connection');
-  futureDestination: string = localStorage.getItem('future-station');
-
   constructor() { }
 
   ngOnInit(): void {

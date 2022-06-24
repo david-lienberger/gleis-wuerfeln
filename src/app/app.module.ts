@@ -8,6 +8,7 @@ import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { PresentJourneyComponent } from './component/present-journey/present-journey.component';
 import { RoadmapComponent } from './component/roadmap/roadmap.component';
+import { FutureJourneyComponent } from './component/future-journey/future-journey.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { RoadmapComponent } from './component/roadmap/roadmap.component';
     HeaderComponent,
     FooterComponent,
     PresentJourneyComponent,
-    RoadmapComponent
+    RoadmapComponent,
+    FutureJourneyComponent
   ],
   imports: [
     BrowserModule,
