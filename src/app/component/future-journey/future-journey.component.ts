@@ -9,6 +9,7 @@ export class FutureJourneyComponent implements OnInit {
 
   @Input() futureTrainTrack: string;
   @Input() futureDestination: string;
+  @Input() changeTime: Date;
 
   constructor() { }
 

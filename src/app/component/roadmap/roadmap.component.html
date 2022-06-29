@@ -3,6 +3,6 @@
     <div *ngIf="i < presentJourney.stations.length -1" class="line"></div>
     <div class="circle" [ngStyle]="{'background-color': i  < 1 ? '#836BDB' : '', 'border': i < 1 ? 'none' : ''}"></div>
     <div class="station-name">{{station.name}}</div>
-    <div *ngIf="showDeparture && i === presentJourney.stations.length -1" class="departure">{{station.departure | date:'HH:mm'}}</div>
+    <div *ngIf="showDeparture && i < presentJourney.stations.length -1" class="departure">{{station.departure | date:'HH:mm'}}</div>
   </div>
 </div>

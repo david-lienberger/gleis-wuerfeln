@@ -1,10 +1,15 @@
 <app-header></app-header>
 
-<div id="input-container">
-  <ng-container *ngIf="!journeyStarted">
-    <span class="material-symbols-outlined search">location_searching</span>
-    <input placeholder="Startpunkt" [(ngModel)]="currentStation" (ngModelChange)="getConnections()">
-  </ng-container>
+<div id="input-container" *ngIf="!journeyStarted">
+  <span class="material-symbols-outlined search">location_searching</span>
+  <input placeholder="Startpunkt" [(ngModel)]="currentStation" (ngModelChange)="getConnections()" [matAutocomplete]="auto">
+  <mat-autocomplete #auto="matAutocomplete">
+    <ng-container *ngFor="let option of autoCompletion">
+      <mat-option [value]="option.label">
+        {{option.label}}
+      </mat-option>
+    </ng-container>
+  </mat-autocomplete>
 </div>
 
 <div class="containers">
@@ -23,14 +28,8 @@
   </div>
 </div>
 
-<div id="current-informations" *ngIf="journeyStarted">
-  <span id="informations-title">Informationen</span>
-  <div id="current-location">Deine Momentane Position: <strong>{{location}}</strong></div>
-  <div id="next-change">Umsteigen: <strong>{{nextChange | date:'HH:mm'}}</strong> Uhr</div>
-</div>
-
-<div class="future-journey-container">
-  <app-future-journey [futureDestination]="futureDestination" [futureTrainTrack]="futureTrainTrack"></app-future-journey>
+<div class="future-journey-container" *ngIf="journeyStarted || (track > 0 && stations > 0)">
+  <app-future-journey [futureDestination]="futureDestination" [futureTrainTrack]="futureTrainTrack" [changeTime]="nextChange"></app-future-journey>
   <button (click)="startJourney()" *ngIf="track > 0 && stations > 0 && !journeyStarted">Reise starten</button>
 </div>
 

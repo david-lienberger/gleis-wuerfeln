@@ -11,6 +11,8 @@ import { RoadmapComponent } from './component/roadmap/roadmap.component';
 import { FutureJourneyComponent } from './component/future-journey/future-journey.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 @NgModule({
   declarations: [
@@ -22,12 +24,14 @@ import {HttpClientModule} from "@angular/common/http";
     RoadmapComponent,
     FutureJourneyComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        HttpClientModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    NoopAnimationsModule,
+    MatAutocompleteModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

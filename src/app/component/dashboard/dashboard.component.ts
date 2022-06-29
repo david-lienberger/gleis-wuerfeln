@@ -25,6 +25,8 @@ export class DashboardComponent implements OnInit {
   journeyStarted: boolean = false;
   nextChange: Date;
 
+  autoCompletion: any[];
+
   constructor(private _dataService: DataService, private _apiService: TransportApiService) { }
 
   ngOnInit(): void {
@@ -33,10 +35,6 @@ export class DashboardComponent implements OnInit {
     this.journeyStarted = localStorage.getItem('journey-started') === "true";
     this.nextChange = new Date(localStorage.getItem('next-change'));
     this.location = localStorage.getItem('current-location');
-
-    window.addEventListener('devicemotion', function(event) {
-      console.log(event.acceleration)
-    });
   }
 
   public newJourney(): void {
@@ -86,6 +84,12 @@ export class DashboardComponent implements OnInit {
   }
 
   public getConnections() {
+    this._apiService.autocompletion(this.currentStation).subscribe((data) => {
+      this.autoCompletion = data.filter(function (value, index, arr) {
+        return value.iconclass.split('-').includes('train');
+      })
+    })
+
     this.tracks = [];
     this._apiService.getConnections(this.currentStation).subscribe((data) => {
       this.currentStationObj = data;
