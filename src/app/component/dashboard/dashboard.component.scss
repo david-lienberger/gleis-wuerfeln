@@ -72,15 +72,14 @@ h2 {
   cursor: pointer;
 }
 
-#current-location {
-  margin-top: 1rem;
-  margin-left: 3rem;
-}
-
-#next-change {
-  margin-left: 3rem;
-}
-
 #current-informations {
-  text-align: center;
+  width: fit-content;
+  height: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#informations-title {
+  font-weight: 700;
+  font-size: 1.5em;
 }

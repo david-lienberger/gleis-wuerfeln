@@ -10,6 +10,6 @@ export class TransportApiService {
   constructor(private _http: HttpClient) { }
 
   getConnections(station: string): Observable<any> {
-    return this._http.get<any>("https://transport.opendata.ch/v1/stationboard?station=" + station);
+    return this._http.get<any>("https://transport.opendata.ch/v1/stationboard?station=" + station + "&limit=10");
   }
 }

@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public newTrack(): void {
-    if (this.currentStationObj !== undefined) {
+    if (this.currentStationObj !== undefined && this.journeyStarted === false) {
       let random = Math.floor(Math.random() * this.tracks.length);
       this.track = this.tracks[random];
 
@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public newStation(): void {
-    if (this.currentStationObj !==  undefined) {
+    if (this.currentStationObj !==  undefined && this.journeyStarted === false) {
       let max = this.maxStations;
       this.stations = Math.floor(Math.random() * (max) + 1);
       this.getFutureJourneyInformation();
@@ -78,7 +78,9 @@ export class DashboardComponent implements OnInit {
 
         this.nextChange = station.passList[this.stations].arrival;
 
-        localStorage.setItem('next-change', this.nextChange.toString())
+        localStorage.setItem('next-change', this.nextChange.toString());
+        localStorage.setItem('future-connection', this.futureTrainTrack);
+        localStorage.setItem('future-station', this.futureDestination);
       }
     }
   }
