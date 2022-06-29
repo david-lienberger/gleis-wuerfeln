@@ -2,7 +2,7 @@
 
 <div id="live" *ngIf="journeyStarted">
   <div id="circle"></div>
-  <span>live</span>
+  <span>Transfer</span>
 </div>
 <div id="input-container" *ngIf="!journeyStarted">
   <span class="material-symbols-outlined search">location_searching</span>
@@ -16,7 +16,7 @@
   </mat-autocomplete>
 </div>
 
-<div class="containers">
+<div class="containers" *ngIf="!journeyStarted || changeActive">
   <div class="container">
     <div>
       <h2>Gleis<span class="material-symbols-outlined">train</span></h2>
@@ -37,7 +37,7 @@
   <button (click)="startJourney()" *ngIf="track > 0 && stations > 0 && !journeyStarted">Reise starten</button>
 </div>
 
-<div class="container" id="info">
+<div class="container" id="info" *ngIf="!journeyStarted || changeActive">
   <span class="material-symbols-outlined">info</span>
   <span id="info-text">Tippe auf die Zahl, um eine neue Zahl zu würfeln.</span>
 </div>

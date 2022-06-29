@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   location: string = '';
   journeyStarted: boolean = false;
   nextChange: Date;
+  changeActive: boolean = true;
 
   autoCompletion: any[];
 
@@ -33,20 +34,34 @@ export class DashboardComponent implements OnInit {
     this.futureTrainTrack = localStorage.getItem('future-connection');
     this.futureDestination = localStorage.getItem('future-station');
     this.journeyStarted = localStorage.getItem('journey-started') === "true";
+    this.changeActive = localStorage.getItem('change-active') === "true";
     this.nextChange = new Date(localStorage.getItem('next-change'));
     this.location = localStorage.getItem('current-location');
 
     setInterval(() => {
       this.checkArrived()
       console.log('checking')
-    }, 3000)
+
+      console.log('change-date', this.nextChange)
+      console.log(this.changeActive)
+      console.log(this.journeyStarted)
+    }, 30000)
   }
 
   private checkArrived(): void {
     const now: Date = new Date();
     const nextChange: Date = new Date(this.nextChange);
-    if (this.journeyStarted && (nextChange.getDate() >= now.getDate() && this.nextChange <= now)) {
+    if (!this.changeActive && this.journeyStarted && (nextChange.getDate() >= now.getDate() && nextChange <= now)) {
+      console.log('changing train')
+
+      localStorage.setItem('change-active', 'true')
+      this.changeActive = true;
+
+      localStorage.setItem('journey-started', 'false');
+      this.journeyStarted = false;
+
       this.currentStation = this.futureDestination;
+
       this.getConnections();
     }
   }
@@ -96,9 +111,11 @@ export class DashboardComponent implements OnInit {
 
         this.nextChange = station.passList[this.stations].arrival;
 
-        localStorage.setItem('next-change', this.nextChange.toString());
-        localStorage.setItem('future-connection', this.futureTrainTrack);
-        localStorage.setItem('future-station', this.futureDestination);
+        if (this.track > 0 && this.stations > 0) {
+          localStorage.setItem('next-change', this.nextChange.toString());
+          localStorage.setItem('future-connection', this.futureTrainTrack);
+          localStorage.setItem('future-station', this.futureDestination);
+        }
       }
     }
   }
@@ -145,17 +162,32 @@ export class DashboardComponent implements OnInit {
 
   public startJourney(): void {
     this.journeyStarted = true;
+    this.changeActive = false;
     this.location = this.currentStationObj.station.name;
 
-    localStorage.setItem('current-location', this.location)
+    let stations: any[] = JSON.parse(localStorage.getItem('stations'));
 
-    localStorage.setItem('stations', JSON.stringify([{
-      name: this.location,
-      departure: this.departure
-    }]))
+    if (stations === null) {
+      stations = [];
 
+      stations.push({
+        name: this.currentStation,
+        departure: this.departure
+      })
+    } else {
+      stations.push({
+        name: this.currentStation,
+        departure: this.departure
+      },{
+        name: this.futureDestination,
+        departure: this.nextChange
+      })
+    }
+
+    localStorage.setItem('stations', JSON.stringify(stations))
+    localStorage.setItem('current-location', this.location);
+    localStorage.setItem('change-active', 'false');
     localStorage.setItem('journey-started', 'true');
-
   }
 
 }
