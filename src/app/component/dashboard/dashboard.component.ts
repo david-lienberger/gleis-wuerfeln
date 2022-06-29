@@ -65,6 +65,11 @@ export class DashboardComponent implements OnInit {
       for (let station of this.currentStationObj.stationboard) {
         if (parseInt(station.stop.platform) === this.track) {
           this.maxStations = station.passList.length -1;
+
+          if (this.stations > this.maxStations) {
+            this.stations = this.maxStations;
+          }
+
           this.getFutureJourneyInformation();
         }
       }
