@@ -1,10 +1,10 @@
 <app-header></app-header>
 
 <div id="input-container">
-  <span class="material-symbols-outlined search">location_searching</span>
-  <input placeholder="Startpunkt" [(ngModel)]="currentStation" (ngModelChange)="getConnections()">
-  <div id="current-location" *ngIf="journeyStarted">Deine Momentane Position: {{location}}</div>
-  <div id="next-change" *ngIf="journeyStarted">Umsteigen: {{nextChange | date:'HH:mm'}}</div>
+  <ng-container *ngIf="!journeyStarted">
+    <span class="material-symbols-outlined search">location_searching</span>
+    <input placeholder="Startpunkt" [(ngModel)]="currentStation" (ngModelChange)="getConnections()">
+  </ng-container>
 </div>
 
 <div class="containers">
@@ -25,15 +25,15 @@
 
 <div class="future-journey-container">
   <app-future-journey [futureDestination]="futureDestination" [futureTrainTrack]="futureTrainTrack"></app-future-journey>
-  <button (click)="startJourney()" *ngIf="!journeyStarted">Reise starten</button>
+  <button (click)="startJourney()" *ngIf="track > 0 && stations > 0 && !journeyStarted">Reise starten</button>
 </div>
 
 <div class="container" id="info">
   <span class="material-symbols-outlined">info</span>
-  <span id="info-text">Schüttle dein Handy oder tippe auf die Zahl, um eine neue Zahl zu würfeln.</span>
+  <span id="info-text">Tippe auf die Zahl, um eine neue Zahl zu würfeln.</span>
 </div>
 
 <div class="button-container">
-  <button (click)="newJourney()">Neue Reise</button>
-  <a routerLink="present-journey"><button>Bisherige Reise</button></a>
+  <button (click)="newJourney()" *ngIf="journeyStarted">Neue Reise</button>
+  <a routerLink="present-journey"  *ngIf="journeyStarted"><button>Bisherige Reise</button></a>
 </div>

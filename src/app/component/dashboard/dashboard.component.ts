@@ -33,11 +33,16 @@ export class DashboardComponent implements OnInit {
     this.journeyStarted = localStorage.getItem('journey-started') === "true";
     this.nextChange = new Date(localStorage.getItem('next-change'));
     this.location = localStorage.getItem('current-location');
+
+    window.addEventListener('devicemotion', function(event) {
+      console.log(event.acceleration)
+    });
   }
 
   public newJourney(): void {
     this._dataService.newJourney();
     localStorage.clear();
+    this.journeyStarted = false;
   }
 
   public newTrack(): void {
