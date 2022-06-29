@@ -17,55 +17,51 @@ export class DashboardComponent implements OnInit {
 
   tracks: number[] = [];
 
-  futureTrainTrack: string = localStorage.getItem('future-connection');
-  futureDestination: string = localStorage.getItem('future-station');
+  futureTrainTrack: string;
+  futureDestination: string;
+
+  departure: Date;
+  location: string = '';
+  journeyStarted: boolean = false;
+  nextChange: Date;
 
   constructor(private _dataService: DataService, private _apiService: TransportApiService) { }
 
   ngOnInit(): void {
-    localStorage.setItem('stations', JSON.stringify(
-      [{
-        name: "bern",
-        departure: "12:03",
-      },
-        {
-          name: "wichtrach",
-          departure: "13:45",
-        },
-        {
-          name: "thun",
-          departure: "14:14"
-        }]
-    ))
+    this.futureTrainTrack = localStorage.getItem('future-connection');
+    this.futureDestination = localStorage.getItem('future-station');
+    this.journeyStarted = localStorage.getItem('journey-started') === "true";
+    this.nextChange = new Date(localStorage.getItem('next-change'));
+    this.location = localStorage.getItem('current-location');
   }
 
   public newJourney(): void {
     this._dataService.newJourney();
-    localStorage.setItem('future-connection', '');
-    localStorage.setItem('future-station', '');
-    localStorage.setItem('stations', '');
+    localStorage.clear();
   }
 
   public newTrack(): void {
-    console.log(this.tracks)
+    if (this.currentStationObj !== undefined) {
+      let random = Math.floor(Math.random() * this.tracks.length);
+      this.track = this.tracks[random];
 
-    let random = Math.floor(Math.random() * this.tracks.length);
-    this.track = this.tracks[random];
-
-    for (let station of this.currentStationObj.stationboard) {
-      if (parseInt(station.stop.platform) === this.track) {
-        this.maxStations = station.passList.length -1;
+      for (let station of this.currentStationObj.stationboard) {
+        if (parseInt(station.stop.platform) === this.track) {
+          this.maxStations = station.passList.length -1;
+        }
       }
     }
   }
 
   public newStation(): void {
-    let max = this.maxStations;
-    this.stations = Math.floor(Math.random() * (max) + 1);
-    this.getFutureJourneyInformation();
+    if (this.currentStationObj !==  undefined) {
+      let max = this.maxStations;
+      this.stations = Math.floor(Math.random() * (max) + 1);
+      this.getFutureJourneyInformation();
+    }
   }
 
-  private getFutureJourneyInformation() {
+  private getFutureJourneyInformation(): void {
     for (let station of this.currentStationObj.stationboard) {
       if (parseInt(station.stop.platform) === this.track) {
         let departureTime: Date = new Date(station.stop.departure);
@@ -73,8 +69,11 @@ export class DashboardComponent implements OnInit {
         this.futureTrainTrack = station.category.toString() + station.number.toString() + ", " +
           DashboardComponent.displayTime(departureTime) + " Uhr, Gleis " + station.stop.platform;
 
-        this._dataService.setNextStation(this.futureDestination);
-        this._dataService.setNextTrack(this.futureTrainTrack);
+        this.departure = station.stop.departure;
+
+        this.nextChange = station.passList[this.stations].arrival;
+
+        localStorage.setItem('next-change', this.nextChange.toString())
       }
     }
   }
@@ -83,7 +82,6 @@ export class DashboardComponent implements OnInit {
     this.tracks = [];
     this._apiService.getConnections(this.currentStation).subscribe((data) => {
       this.currentStationObj = data;
-      console.log(data)
       for (let station of data.stationboard) {
         this.tracks.push(DashboardComponent.parseTrack(station.stop.platform));
       }
@@ -106,6 +104,21 @@ export class DashboardComponent implements OnInit {
     } else {
       return 'XX:0' + time.getMinutes();
     }
+  }
+
+  public startJourney(): void {
+    this.journeyStarted = true;
+    this.location = this.currentStationObj.station.name;
+
+    localStorage.setItem('current-location', this.location)
+
+    localStorage.setItem('stations', JSON.stringify([{
+      name: this.location,
+      departure: this.departure
+    }]))
+
+    localStorage.setItem('journey-started', 'true');
+
   }
 
 }

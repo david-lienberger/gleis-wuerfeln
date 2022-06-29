@@ -12,10 +12,4 @@ export class PresentJourneyComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public newJourney(): void {
-    localStorage.setItem('future-connection', '');
-    localStorage.setItem('future-station', '');
-    localStorage.setItem('stations', '');
-  }
-
 }

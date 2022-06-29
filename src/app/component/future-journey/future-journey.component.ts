@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DataService} from "../../service/data.service";
 
 @Component({
   selector: 'app-future-journey',
@@ -8,19 +7,11 @@ import {DataService} from "../../service/data.service";
 })
 export class FutureJourneyComponent implements OnInit {
 
- futureTrainTrack: string;
-  futureDestination: string;
+  @Input() futureTrainTrack: string;
+  @Input() futureDestination: string;
 
-  constructor(private _dataService: DataService) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this._dataService.getNextStation().subscribe((data) => {
-      this.futureDestination = data;
-    })
-
-    this._dataService.getNextTrack().subscribe((data) => {
-      this.futureTrainTrack = data;
-    })
-  }
+  ngOnInit(): void { }
 
 }
