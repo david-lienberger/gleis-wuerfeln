@@ -35,6 +35,20 @@ export class DashboardComponent implements OnInit {
     this.journeyStarted = localStorage.getItem('journey-started') === "true";
     this.nextChange = new Date(localStorage.getItem('next-change'));
     this.location = localStorage.getItem('current-location');
+
+    setInterval(() => {
+      this.checkArrived()
+      console.log('checking')
+    }, 3000)
+  }
+
+  private checkArrived(): void {
+    const now: Date = new Date();
+    const nextChange: Date = new Date(this.nextChange);
+    if (this.journeyStarted && (nextChange.getDate() >= now.getDate() && this.nextChange <= now)) {
+      this.currentStation = this.futureDestination;
+      this.getConnections();
+    }
   }
 
   public newJourney(): void {
@@ -51,6 +65,7 @@ export class DashboardComponent implements OnInit {
       for (let station of this.currentStationObj.stationboard) {
         if (parseInt(station.stop.platform) === this.track) {
           this.maxStations = station.passList.length -1;
+          this.getFutureJourneyInformation();
         }
       }
     }
@@ -83,13 +98,19 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  public getConnections() {
+  public autoComplete(): void {
+    this.track = 0;
+    this.stations = 0;
     this._apiService.autocompletion(this.currentStation).subscribe((data) => {
-      this.autoCompletion = data.filter(function (value, index, arr) {
+      this.autoCompletion = data.filter(function (value) {
         return value.iconclass.split('-').includes('train');
       })
     })
 
+    this.getConnections();
+  }
+
+  public getConnections() {
     this.tracks = [];
     this._apiService.getConnections(this.currentStation).subscribe((data) => {
       this.currentStationObj = data;

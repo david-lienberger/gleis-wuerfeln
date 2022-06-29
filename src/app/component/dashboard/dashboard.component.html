@@ -2,7 +2,7 @@
 
 <div id="input-container" *ngIf="!journeyStarted">
   <span class="material-symbols-outlined search">location_searching</span>
-  <input placeholder="Startpunkt" [(ngModel)]="currentStation" (ngModelChange)="getConnections()" [matAutocomplete]="auto">
+  <input placeholder="Startpunkt" [(ngModel)]="currentStation" (ngModelChange)="autoComplete()" [matAutocomplete]="auto">
   <mat-autocomplete #auto="matAutocomplete">
     <ng-container *ngFor="let option of autoCompletion">
       <mat-option [value]="option.label">
