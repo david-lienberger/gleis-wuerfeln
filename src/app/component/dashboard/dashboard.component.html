@@ -1,5 +1,9 @@
 <app-header></app-header>
 
+<div id="live" *ngIf="journeyStarted">
+  <div id="circle"></div>
+  <span>live</span>
+</div>
 <div id="input-container" *ngIf="!journeyStarted">
   <span class="material-symbols-outlined search">location_searching</span>
   <input placeholder="Startpunkt" [(ngModel)]="currentStation" (ngModelChange)="autoComplete()" [matAutocomplete]="auto">
