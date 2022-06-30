@@ -166,11 +166,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private static displayTime(time: Date): string {
-    if (time.getMinutes() >= 10) {
-      return 'XX:' + time.getMinutes();
-    } else {
-      return 'XX:0' + time.getMinutes();
-    }
+      return time.toLocaleTimeString().slice(0, 5);
   }
 
   public startJourney(): void {
