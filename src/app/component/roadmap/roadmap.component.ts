@@ -10,6 +10,10 @@ import {DataService} from "../../service/data.service";
 export class RoadmapComponent implements OnInit {
 
   @Input() showDeparture = true;
+  departure: Date = new Date(localStorage.getItem('departure'));
+  nextChange: Date = new Date(localStorage.getItem('next-change'));
+  now: Date = new Date();
+  timeNeeded: number;
 
   presentJourney: Journey = {
     stations: []
@@ -23,5 +27,18 @@ export class RoadmapComponent implements OnInit {
     this._dataService.getNewJourney().subscribe(() => {
       this.presentJourney.stations = [];
     })
+
+    let timePassed: number = 0;
+
+    if (this.departure <= new Date()) {
+      timePassed = (new Date().getTime() - this.departure.getTime()) /1000;
+    }
+
+    this.timeNeeded = ((this.nextChange.getTime() - this.departure.getTime()) /1000) -timePassed;
+
+    setInterval(() => {
+      this.now = new Date()
+    }, 10000)
+
   }
 }

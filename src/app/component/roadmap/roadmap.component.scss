@@ -14,13 +14,12 @@
 
 #live-circle {
   position: relative;
-  left: 1.148em;
-  top: 0.15em;
+  left: 16.7px;
+  top: 0.6px;
   height: 0.9em;
   width: 0.9em;
   border-radius: 50%;
   background-color: var(--accent-color);
-  animation: live 2.5s ease-in-out infinite, move 180s forwards;
 }
 
 .station {
@@ -48,6 +47,6 @@
 
 @keyframes move {
   100% {
-    margin-top: 3.5rem;
+    margin-top: 3.6rem;
   }
 }

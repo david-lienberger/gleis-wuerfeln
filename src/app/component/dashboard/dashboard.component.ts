@@ -68,10 +68,6 @@ export class DashboardComponent implements OnInit {
   }
 
   private checkInTransfer(): void {
-    console.log(this.nextChange)
-    console.log(this.departure)
-    console.log(new Date())
-    console.log(this.nextChange >= new Date() && this.departure <= new Date())
     this.inTransfer = this.nextChange >= new Date() && this.departure <= new Date();
   }
 
@@ -79,6 +75,7 @@ export class DashboardComponent implements OnInit {
     this._dataService.newJourney();
     localStorage.clear();
     this.journeyStarted = false;
+    this.changeActive = false;
   }
 
   public newTrack(): void {

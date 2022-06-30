@@ -45,6 +45,6 @@
 </div>
 
 <div class="button-container">
-  <a routerLink="present-journey" *ngIf="journeyStarted"><button>Bisherige Reise</button></a>
-  <button (click)="newJourney()" *ngIf="journeyStarted">Neue Reise</button>
+  <a routerLink="present-journey" *ngIf="journeyStarted || changeActive"><button>Bisherige Reise</button></a>
+  <button (click)="newJourney()" *ngIf="journeyStarted || changeActive">Neue Reise</button>
 </div>
