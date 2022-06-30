@@ -15,6 +15,8 @@ export class RoadmapComponent implements OnInit {
   now: Date = new Date();
   timeNeeded: number;
 
+  currentPosition: number;
+
   presentJourney: Journey = {
     stations: []
   }
@@ -35,6 +37,8 @@ export class RoadmapComponent implements OnInit {
     }
 
     this.timeNeeded = ((this.nextChange.getTime() - this.departure.getTime()) /1000) -timePassed;
+
+    this.currentPosition = (this.timeNeeded - timePassed) / 35;
 
     setInterval(() => {
       this.now = new Date()

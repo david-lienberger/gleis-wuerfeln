@@ -1,6 +1,6 @@
 <div class="road-map" *ngFor="let station of presentJourney.stations; let i = index">
   <div class="station" [ngStyle]="{'margin-left': i === presentJourney.stations.length -2 ? '-0.89rem':''}">
-    <div id="live-circle" *ngIf="i === presentJourney.stations.length -2" [ngStyle]="{'animation': this.departure <= this.now ? 'move ' + timeNeeded + 's forwards' + ', live 2.5s ease-in-out infinite':''}"></div>
+    <div id="live-circle" *ngIf="i === presentJourney.stations.length -2" [ngStyle]="{'animation': this.departure <= this.now ? 'move ' + timeNeeded + 's forwards' + ', live 2.5s ease-in-out infinite':'', 'margin-top': 35 - currentPosition + '%'}"></div>
     <div *ngIf="i < presentJourney.stations.length -1" class="line"></div>
     <div class="circle" [ngStyle]="{'background-color': i  < 1 ? '#41335F' : '', 'border': i < 1 ? 'none' : ''}"></div>
     <div class="station-name">{{station.name}}</div>
