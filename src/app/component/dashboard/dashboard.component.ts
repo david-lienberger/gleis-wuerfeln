@@ -98,7 +98,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public newStation(): void {
-    if (this.currentStationObj !==  undefined && this.journeyStarted === false) {
+    if (this.currentStationObj !==  undefined && this.journeyStarted === false && this.track > 0) {
       let max = this.maxStations;
       this.stations = Math.floor(Math.random() * (max) + 1);
       this.getFutureJourneyInformation();
