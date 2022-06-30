@@ -13,9 +13,11 @@ export class RoadmapComponent implements OnInit {
   departure: Date = new Date(localStorage.getItem('departure'));
   nextChange: Date = new Date(localStorage.getItem('next-change'));
   now: Date = new Date();
-  timeNeeded: number;
+  timeNeeded: number = 0;
+  timePassed: number = 0;
+  departed: boolean = false;
 
-  currentPosition: number;
+  currentPosition: number = 0;
 
   presentJourney: Journey = {
     stations: []
@@ -24,24 +26,26 @@ export class RoadmapComponent implements OnInit {
   constructor(private _dataService: DataService) { }
 
   ngOnInit(): void {
+    this.departed = this.departure <= this.now;
     this.presentJourney.stations = JSON.parse(localStorage.getItem('stations'));
 
     this._dataService.getNewJourney().subscribe(() => {
       this.presentJourney.stations = [];
     })
 
-    let timePassed: number = 0;
-
     if (this.departure <= new Date()) {
-      timePassed = (new Date().getTime() - this.departure.getTime()) /1000;
+      this.timePassed = (new Date().getTime() - this.departure.getTime()) / 1000;
     }
 
-    this.timeNeeded = ((this.nextChange.getTime() - this.departure.getTime()) /1000) -timePassed;
+    this.timeNeeded = ((this.nextChange.getTime() - this.departure.getTime()) / 1000);
 
-    this.currentPosition = (this.timeNeeded - timePassed) / 35;
+    if (this.timePassed > 0) {
+      this.currentPosition = (this.timePassed * 35.5) / this.timeNeeded;
+    }
 
     setInterval(() => {
-      this.now = new Date()
+      this.now = new Date();
+      this.departed = this.departure <= this.now;
     }, 10000)
 
   }
