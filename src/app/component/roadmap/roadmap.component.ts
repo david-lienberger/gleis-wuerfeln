@@ -40,7 +40,7 @@ export class RoadmapComponent implements OnInit {
     this.timeNeeded = ((this.nextChange.getTime() - this.departure.getTime()) / 1000);
 
     if (this.timePassed > 0) {
-      this.currentPosition = (this.timePassed * 35.5) / this.timeNeeded;
+      this.currentPosition = (this.timePassed * 39.2) / this.timeNeeded;
     }
 
     setInterval(() => {

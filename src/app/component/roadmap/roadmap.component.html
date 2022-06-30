@@ -1,5 +1,5 @@
 <div class="road-map" *ngFor="let station of presentJourney.stations; let i = index">
-  <div class="station" [ngStyle]="{'margin-left': i === presentJourney.stations.length - 2 ? '-0.93rem':''}">
+  <div class="station" [ngStyle]="{'margin-left': i === presentJourney.stations.length - 2 ? '-0.91rem':''}">
     <div id="live-circle" *ngIf="i === presentJourney.stations.length - 2" [ngStyle]="{'animation': this.departed ? 'move ' + (this.timeNeeded - this.timePassed) + 's forwards' + ', live 2.5s ease-in-out infinite':'',
     'margin-top': this.departed ? this.currentPosition + '%':''}"></div>
     <div *ngIf="i < presentJourney.stations.length -1" class="line"></div>
