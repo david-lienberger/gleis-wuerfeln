@@ -153,13 +153,16 @@ export class DashboardComponent implements OnInit {
   }
 
   private static parseTrack(track: string): number {
-    if (track.length === 1) {
-      return parseInt(track);
-    } else if (track[1].match("[a-zA-Z]")) {
-      return parseInt(track[0]);
-    } else {
-      return (parseInt(track[0].toString() + track[1].toString()));
+    if (track !== null) {
+      if (track.length === 1) {
+        return parseInt(track);
+      } else if (track[1].match("[a-zA-Z]")) {
+        return parseInt(track[0]);
+      } else {
+        return (parseInt(track[0].toString() + track[1].toString()));
+      }
     }
+    return 0;
   }
 
   private static displayTime(time: Date): string {
