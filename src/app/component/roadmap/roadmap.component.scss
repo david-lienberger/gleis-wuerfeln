@@ -12,6 +12,17 @@
   border: var(--font-color) solid 1.7px;;
 }
 
+#live-circle {
+  position: relative;
+  left: 1.148em;
+  top: 0.15em;
+  height: 0.9em;
+  width: 0.9em;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  animation: live 2.5s ease-in-out infinite, move 180s forwards;
+}
+
 .station {
   display: flex;
   height: 3.5rem;
@@ -25,7 +36,6 @@
 .departure {
   font-size: 0.8em;
   margin-left: 0.5rem;
-  //margin-top: -0.5rem;
 }
 
 .line {
@@ -34,4 +44,10 @@
   position: relative;
   left: 0.6rem;
   z-index: -1;
+}
+
+@keyframes move {
+  100% {
+    margin-top: 3.5rem;
+  }
 }

@@ -18,11 +18,9 @@ n
 >src/app/component/future-journey/future-journey.component.scss,c\9\c9c38bd699eb18b5e9be7a3d35e41d0b25597257
 E
 src/app/app.module.ts,0\2\02c004b4329a0d99c45abb61a30dadfde61ecf5d
-?
-src/styles.scss,6\a\6a36a191b6d613ce902a6e1beb58b65e8a5136ab
 l
 <src/app/component/future-journey/future-journey.component.ts,a\e\aefbbf9576b8ed409a1501a148f3d102358010bd
 X
 (src/app/service/transport-api.service.ts,c\a\cacc3a4a52845296d21d7d613a70332b3ac06747
-`
-0src/app/component/roadmap/roadmap.component.html,8\0\80d2c4d9f8141c780b26195004066504d8ce140c
+n
+>src/app/component/future-journey/future-journey.component.html,1\e\1e1f1f0119b67ba14d75375bafcf55495caa60c2

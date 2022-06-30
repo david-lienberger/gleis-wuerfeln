@@ -26,6 +26,8 @@ export class DashboardComponent implements OnInit {
   nextChange: Date;
   changeActive: boolean = true;
 
+  inTransfer: boolean = false;
+
   autoCompletion: any[];
 
   constructor(private _dataService: DataService, private _apiService: TransportApiService) { }
@@ -37,22 +39,21 @@ export class DashboardComponent implements OnInit {
     this.changeActive = localStorage.getItem('change-active') === "true";
     this.nextChange = new Date(localStorage.getItem('next-change'));
     this.location = localStorage.getItem('current-location');
+    this.departure = new Date(localStorage.getItem('departure'));
+
+    this.checkArrived();
+    this.checkInTransfer();
 
     setInterval(() => {
-      this.checkArrived()
-      console.log('checking')
-
-      console.log('change-date', this.nextChange)
-      console.log(this.changeActive)
-      console.log(this.journeyStarted)
-    }, 30000)
+      this.checkArrived();
+      this.checkInTransfer();
+    }, 10000)
   }
 
   private checkArrived(): void {
     const now: Date = new Date();
     const nextChange: Date = new Date(this.nextChange);
     if (!this.changeActive && this.journeyStarted && (nextChange.getDate() >= now.getDate() && nextChange <= now)) {
-      console.log('changing train')
 
       localStorage.setItem('change-active', 'true')
       this.changeActive = true;
@@ -64,6 +65,14 @@ export class DashboardComponent implements OnInit {
 
       this.getConnections();
     }
+  }
+
+  private checkInTransfer(): void {
+    console.log(this.nextChange)
+    console.log(this.departure)
+    console.log(new Date())
+    console.log(this.nextChange >= new Date() && this.departure <= new Date())
+    this.inTransfer = this.nextChange >= new Date() && this.departure <= new Date();
   }
 
   public newJourney(): void {
@@ -103,18 +112,22 @@ export class DashboardComponent implements OnInit {
     for (let station of this.currentStationObj.stationboard) {
       if (parseInt(station.stop.platform) === this.track) {
         let departureTime: Date = new Date(station.stop.departure);
-        this.futureDestination = station.passList[this.stations].location.name;
-        this.futureTrainTrack = station.category.toString() + station.number.toString() + ", " +
-          DashboardComponent.displayTime(departureTime) + " Uhr, Gleis " + station.stop.platform;
+        if (station.passList[this.stations] !== undefined) {
+          this.futureDestination = station.passList[this.stations].location.name;
 
-        this.departure = station.stop.departure;
+          this.futureTrainTrack = station.category.toString() + station.number.toString() + ", " +
+            DashboardComponent.displayTime(departureTime) + " Uhr, Gleis " + station.stop.platform;
 
-        this.nextChange = station.passList[this.stations].arrival;
+          this.departure = station.stop.departure;
+          localStorage.setItem('departure', this.departure.toString());
 
-        if (this.track > 0 && this.stations > 0) {
-          localStorage.setItem('next-change', this.nextChange.toString());
-          localStorage.setItem('future-connection', this.futureTrainTrack);
-          localStorage.setItem('future-station', this.futureDestination);
+          this.nextChange = station.passList[this.stations].arrival;
+
+          if (this.track > 0 && this.stations > 0 && this.nextChange !== null) {
+            localStorage.setItem('next-change', this.nextChange.toString());
+            localStorage.setItem('future-connection', this.futureTrainTrack);
+            localStorage.setItem('future-station', this.futureDestination);
+          }
         }
       }
     }
@@ -173,12 +186,12 @@ export class DashboardComponent implements OnInit {
       stations.push({
         name: this.currentStation,
         departure: this.departure
+      },{
+        name: this.futureDestination,
+        departure: this.nextChange
       })
     } else {
       stations.push({
-        name: this.currentStation,
-        departure: this.departure
-      },{
         name: this.futureDestination,
         departure: this.nextChange
       })
