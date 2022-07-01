@@ -27,8 +27,6 @@ export class RoadmapComponent implements OnInit {
   constructor(private _dataService: DataService) { }
 
   ngOnInit(): void {
-    console.log(this.departed)
-
     this.departed = this.departure <= this.now;
     this.arrived = this.nextChange <= this.now;
     this.presentJourney.stations = JSON.parse(localStorage.getItem('stations'));

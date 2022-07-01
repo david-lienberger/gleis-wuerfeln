@@ -55,7 +55,9 @@ export class DashboardComponent implements OnInit {
   private checkArrived(): void {
     const now: Date = new Date();
     const nextChange: Date = new Date(this.nextChange);
-    if (!this.changeActive && this.journeyStarted && (nextChange.getDate() >= now.getDate() && nextChange <= now)) {
+
+    if (!this.changeActive && this.journeyStarted && (nextChange <= now)) {
+      this.inTransfer = false;
 
       localStorage.setItem('change-active', 'true')
       this.changeActive = true;
@@ -66,8 +68,14 @@ export class DashboardComponent implements OnInit {
       this.currentStation = this.futureDestination;
 
       this.getConnections();
-    } else {
+    } else if (!this.inTransfer && this.journeyStarted && (this.departure <= now)) {
       this.inTransfer = true;
+
+      localStorage.setItem('change-active', 'false')
+      this.changeActive = false;
+
+      localStorage.setItem('journey-started', 'true');
+      this.journeyStarted = true;
     }
   }
 
@@ -76,6 +84,10 @@ export class DashboardComponent implements OnInit {
     localStorage.clear();
     this.journeyStarted = false;
     this.changeActive = false;
+    this.inTransfer = false;
+    this.currentStation = '';
+    this.track = 0;
+    this.stations = 0;
   }
 
   public newTrack(): void {
