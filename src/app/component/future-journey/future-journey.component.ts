@@ -1,18 +1,28 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-future-journey',
   templateUrl: './future-journey.component.html',
   styleUrls: ['./future-journey.component.scss']
 })
-export class FutureJourneyComponent implements OnInit {
+export class FutureJourneyComponent implements OnChanges {
 
   @Input() futureTrainTrack: string;
   @Input() futureDestination: string;
   @Input() changeTime: Date;
 
-  constructor() { }
+  @Input() xCoords: number;
+  @Input() yCoords: number;
 
-  ngOnInit(): void { }
+  url: string = '';
+
+  constructor() {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(this.xCoords)
+    console.log(this.yCoords  )
+    this.url = 'https://www.openstreetmap.org/export/embed.html?bbox=' + this.yCoords + '%2C' + this.xCoords;
+  }
 
 }

@@ -16,6 +16,7 @@ export class RoadmapComponent implements OnInit {
   timeNeeded: number = 0;
   timePassed: number = 0;
   departed: boolean = false;
+  arrived: boolean = false;
 
   currentPosition: number = 0;
 
@@ -27,6 +28,7 @@ export class RoadmapComponent implements OnInit {
 
   ngOnInit(): void {
     this.departed = this.departure <= this.now;
+    this.arrived = this.nextChange <= this.now;
     this.presentJourney.stations = JSON.parse(localStorage.getItem('stations'));
 
     this._dataService.getNewJourney().subscribe(() => {
@@ -46,7 +48,9 @@ export class RoadmapComponent implements OnInit {
     setInterval(() => {
       this.now = new Date();
       this.departed = this.departure <= this.now;
-    }, 10000)
+      this.arrived = this.nextChange <= this.now;
+      this.currentPosition = (this.timePassed * 34) / this.timeNeeded;
+    }, 5000)
 
   }
 }

@@ -25,6 +25,8 @@ export class DashboardComponent implements OnInit {
   journeyStarted: boolean = false;
   nextChange: Date;
   changeActive: boolean = true;
+  xCoords: number;
+  yCoords: number;
 
   inTransfer: boolean = false;
 
@@ -40,6 +42,8 @@ export class DashboardComponent implements OnInit {
     this.nextChange = new Date(localStorage.getItem('next-change'));
     this.location = localStorage.getItem('current-location');
     this.departure = new Date(localStorage.getItem('departure'));
+    this.xCoords = parseFloat(localStorage.getItem('x'));
+    this.yCoords = parseFloat(localStorage.getItem('y'));
 
     this.checkArrived();
     this.checkInTransfer();
@@ -47,7 +51,7 @@ export class DashboardComponent implements OnInit {
     setInterval(() => {
       this.checkArrived();
       this.checkInTransfer();
-    }, 10000)
+    }, 5000)
   }
 
   private checkArrived(): void {
@@ -68,7 +72,8 @@ export class DashboardComponent implements OnInit {
   }
 
   private checkInTransfer(): void {
-    this.inTransfer = this.nextChange >= new Date() && this.departure <= new Date();
+    let now = new Date();
+    this.inTransfer = this.nextChange >= now && this.departure <= now;
   }
 
   public newJourney(): void {
@@ -85,7 +90,7 @@ export class DashboardComponent implements OnInit {
 
       for (let station of this.currentStationObj.stationboard) {
         if (parseInt(station.stop.platform) === this.track) {
-          this.maxStations = station.passList.length -1;
+          this.maxStations = station.passList.length - 1;
 
           if (this.stations > this.maxStations) {
             this.stations = this.maxStations;
@@ -120,10 +125,15 @@ export class DashboardComponent implements OnInit {
 
           this.nextChange = station.passList[this.stations].arrival;
 
+          this.xCoords = station.passList[this.stations].location.coordinate.x;
+          this.yCoords = station.passList[this.stations].location.coordinate.y;
+
           if (this.track > 0 && this.stations > 0 && this.nextChange !== null) {
             localStorage.setItem('next-change', this.nextChange.toString());
             localStorage.setItem('future-connection', this.futureTrainTrack);
             localStorage.setItem('future-station', this.futureDestination);
+            localStorage.setItem('x', this.xCoords.toString());
+            localStorage.setItem('y', this.yCoords.toString());
           }
         }
       }
@@ -146,6 +156,7 @@ export class DashboardComponent implements OnInit {
     this.tracks = [];
     this._apiService.getConnections(this.currentStation).subscribe((data) => {
       this.currentStationObj = data;
+        data.stationboard.reverse();
       for (let station of data.stationboard) {
         this.tracks.push(DashboardComponent.parseTrack(station.stop.platform));
       }

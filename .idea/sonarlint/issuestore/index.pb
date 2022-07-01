@@ -10,11 +10,9 @@ O
 firebase.json,5\9\59951656e3803454427cfe9d761fed1df10b7528
 ;
 .firebaserc,3\6\368d8a929a4bff0376a597a4de99b28a56e8efc3
-n
->src/app/component/future-journey/future-journey.component.scss,c\9\c9c38bd699eb18b5e9be7a3d35e41d0b25597257
 E
 src/app/app.module.ts,0\2\02c004b4329a0d99c45abb61a30dadfde61ecf5d
-l
-<src/app/component/future-journey/future-journey.component.ts,a\e\aefbbf9576b8ed409a1501a148f3d102358010bd
-n
->src/app/component/future-journey/future-journey.component.html,1\e\1e1f1f0119b67ba14d75375bafcf55495caa60c2
+X
+(src/app/service/transport-api.service.ts,c\a\cacc3a4a52845296d21d7d613a70332b3ac06747
+p
+@src/app/component/present-journey/present-journey.component.html,1\2\129294f20dd2afc62d9d210a7891c44daa805983

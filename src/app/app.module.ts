@@ -13,6 +13,7 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import { SafePipe } from './pipe/safe.pipe';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     FooterComponent,
     PresentJourneyComponent,
     RoadmapComponent,
-    FutureJourneyComponent
+    FutureJourneyComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,

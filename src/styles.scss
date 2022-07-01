@@ -59,6 +59,15 @@ h2 {
   padding-bottom: 2rem;
 }
 
+.map {
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 5px 10px #E7E7E7;
+  width: 60vw;
+  height: 15rem;
+  max-width: 30rem;
+}
+
 app-dashboard {
   height: 100vh;
 }

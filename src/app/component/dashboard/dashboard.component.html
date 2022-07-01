@@ -34,7 +34,8 @@
 </div>
 
 <div class="future-journey-container" *ngIf="journeyStarted || (track > 0 && stations > 0)">
-  <app-future-journey [futureDestination]="futureDestination" [futureTrainTrack]="futureTrainTrack" [changeTime]="nextChange"></app-future-journey>
+  <app-future-journey [futureDestination]="futureDestination" [futureTrainTrack]="futureTrainTrack"
+                      [changeTime]="nextChange" [xCoords]="xCoords" [yCoords]="yCoords"></app-future-journey>
   <button (click)="startJourney()" *ngIf="track > 0 && stations > 0 && !journeyStarted"
           [ngStyle]="{'cursor': this.nextChange === null ? 'not-allowed':'pointer'}" [disabled]="this.nextChange === null">Reise starten</button>
 </div>
