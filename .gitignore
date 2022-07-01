@@ -9,6 +9,7 @@
 # Firebase
 .firebaserc
 .firebase
+firebase.json
 
 # Node
 /node_modules
