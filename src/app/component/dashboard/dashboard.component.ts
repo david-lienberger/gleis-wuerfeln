@@ -46,11 +46,9 @@ export class DashboardComponent implements OnInit {
     this.yCoords = parseFloat(localStorage.getItem('y'));
 
     this.checkArrived();
-    this.checkInTransfer();
 
     setInterval(() => {
       this.checkArrived();
-      this.checkInTransfer();
     }, 5000)
   }
 
@@ -68,12 +66,9 @@ export class DashboardComponent implements OnInit {
       this.currentStation = this.futureDestination;
 
       this.getConnections();
+    } else {
+      this.inTransfer = true;
     }
-  }
-
-  private checkInTransfer(): void {
-    let now = new Date();
-    this.inTransfer = this.nextChange >= now && this.departure <= now;
   }
 
   public newJourney(): void {
@@ -152,7 +147,7 @@ export class DashboardComponent implements OnInit {
     this.getConnections();
   }
 
-  public getConnections() {
+  public getConnections(): void {
     this.tracks = [];
     this._apiService.getConnections(this.currentStation).subscribe((data) => {
       this.currentStationObj = data;

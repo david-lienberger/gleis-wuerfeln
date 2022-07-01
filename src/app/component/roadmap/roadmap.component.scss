@@ -14,8 +14,8 @@
 
 #live-circle {
   position: relative;
-  left: 18.5px;
-  top: 2px;
+  left: 17px;
+  top: 0.7px;
   height: 0.9em;
   width: 0.9em;
   border-radius: 50%;
@@ -47,6 +47,6 @@
 
 @keyframes move {
   100% {
-    margin-top: 34%;
+    margin-top: 29%;
   }
 }

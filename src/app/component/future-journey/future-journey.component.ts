@@ -20,8 +20,6 @@ export class FutureJourneyComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.xCoords)
-    console.log(this.yCoords  )
     this.url = 'https://www.openstreetmap.org/export/embed.html?bbox=' + this.yCoords + '%2C' + this.xCoords;
   }
 
