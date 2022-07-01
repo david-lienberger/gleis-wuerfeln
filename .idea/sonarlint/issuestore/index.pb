@@ -3,9 +3,6 @@ n
 >src/app/component/present-journey/present-journey.component.ts,1\1\11627591e1df1ca0dad0870b76f234f5d83b7532
 O
 src/app/service/data.service.ts,d\e\def1adc3c99fcdeabbc38f62c4f6d16f237f5e22
-:
-
-.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 =
 firebase.json,5\9\59951656e3803454427cfe9d761fed1df10b7528
 ;
