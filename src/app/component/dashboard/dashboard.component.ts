@@ -32,6 +32,10 @@ export class DashboardComponent implements OnInit {
 
   autoCompletion: any[];
 
+  tipStart: string = 'Von hier startest du.';
+  tipTrack: string = 'Auf diesem Gleis fährt dein Zug.';
+  tipStations: string = 'So viele Haltestellen passierst du.';
+
   constructor(private _dataService: DataService, private _apiService: TransportApiService) { }
 
   ngOnInit(): void {
@@ -190,6 +194,7 @@ export class DashboardComponent implements OnInit {
   public startJourney(): void {
     this.journeyStarted = true;
     this.changeActive = false;
+    this.inTransfer = false;
     this.location = this.currentStationObj.station.name;
 
     let stations: any[] = JSON.parse(localStorage.getItem('stations'));

@@ -7,7 +7,7 @@
 </div>
 <div id="input-container" *ngIf="!journeyStarted">
   <span class="material-symbols-outlined search">location_searching</span>
-  <input placeholder="Startpunkt" [(ngModel)]="currentStation" (ngModelChange)="autoComplete()" [matAutocomplete]="auto">
+  <input placeholder="Startpunkt" [(ngModel)]="currentStation" (ngModelChange)="autoComplete()" [matAutocomplete]="auto" [matTooltip]="tipStart">
   <mat-autocomplete #auto="matAutocomplete">
     <ng-container *ngFor="let option of autoCompletion">
       <mat-option [value]="option.label">
@@ -18,14 +18,14 @@
 </div>
 
 <div class="containers" *ngIf="!journeyStarted || changeActive">
-  <div class="container">
+  <div class="container" [matTooltip]="tipTrack">
     <div>
       <h2>Gleis<span class="material-symbols-outlined">train</span></h2>
       <span class="number" [ngStyle]="{'cursor': this.currentStationObj === undefined ? 'not-allowed':'pointer'}" (click)="newTrack()">{{track}}</span>
     </div>
   </div>
 
-  <div class="container">
+  <div class="container" [matTooltip]="tipStations">
     <div>
       <h2>Haltestellen<span class="material-symbols-outlined">subway</span></h2>
       <span class="number" [ngStyle]="{'cursor': this.track > 0 && this.currentStationObj !== undefined ? 'pointer':'not-allowed'}" (click)="newStation()">{{stations}}</span>
