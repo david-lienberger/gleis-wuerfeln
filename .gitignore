@@ -10,6 +10,7 @@
 .firebaserc
 .firebase
 firebase.json
+src/environments
 
 # Node
 /node_modules
