@@ -32,8 +32,13 @@ import {trigger, style, animate, transition, state,} from '@angular/animations';
       ]),
       transition('up => down', [
         animate('200ms')
+      ]),
+      transition(':enter', [
+        animate('300ms ease', style({
+          transform: 'translateY(8rem)'
+        }))
       ])
-    ])
+    ]),
   ]
 })
 export class DashboardComponent implements OnInit {
@@ -60,6 +65,7 @@ export class DashboardComponent implements OnInit {
   inTransfer: boolean = false;
 
   autoCompletion: any[];
+  optionChosen: boolean = false;
 
   tipStart: string = 'Von hier startest du.';
   tipTrack: string = 'Auf diesem Gleis fährt dein Zug.';
@@ -111,10 +117,6 @@ export class DashboardComponent implements OnInit {
 
       localStorage.setItem('journey-started', 'true');
       this.journeyStarted = true;
-    } else {
-      console.log(this.departure)
-      console.log(this.nextChange)
-      console.log(now)
     }
   }
 
@@ -208,6 +210,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public autoComplete(): void {
+    this.optionChosen = false;
     this.track = 0;
     this.stations = 0;
     this._apiService.autocompletion(this.currentStation).subscribe((data) => {

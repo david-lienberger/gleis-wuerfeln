@@ -5,20 +5,20 @@
   <span *ngIf="inTransfer">Transfer</span>
   <span *ngIf="!inTransfer">Umsteigen | Warten</span>
 </div>
-<div [@slideUp]="this.currentStation === '' ? 'down':'up'" id="input-container" *ngIf="!journeyStarted">
-  <h2 *ngIf="this.currentStation === ''">Wo möchtest du starten?</h2>
+<div [@slideUp]="!optionChosen ? 'down':'up'" id="input-container" *ngIf="!journeyStarted">
+  <h2 *ngIf="!optionChosen">Wo möchtest du starten?</h2>
   <span class="material-symbols-outlined search">location_searching</span>
   <input placeholder="Startpunkt" [(ngModel)]="currentStation" (ngModelChange)="autoComplete()" [matAutocomplete]="auto" [matTooltip]="tipStart">
   <mat-autocomplete #auto="matAutocomplete">
     <ng-container *ngFor="let option of autoCompletion">
-      <mat-option [value]="option.label">
+      <mat-option [value]="option.label" (click)="optionChosen = true">
         {{option.label}}
       </mat-option>
     </ng-container>
   </mat-autocomplete>
 </div>
 
-<div @slideInOut class="containers" *ngIf="this.currentStation !== '' && !journeyStarted || changeActive">
+<div @slideInOut class="containers" *ngIf="optionChosen && !journeyStarted || changeActive">
   <div class="container" [matTooltip]="tipTrack">
     <div>
       <h2>Gleis<span class="material-symbols-outlined">train</span></h2>
@@ -34,7 +34,7 @@
   </div>
 </div>
 
-<div @slideInOut class="container" id="info" *ngIf=" this.currentStation !== '' && !journeyStarted || changeActive">
+<div @slideInOut class="container" id="info" *ngIf="optionChosen && !journeyStarted || changeActive">
   <span class="material-symbols-outlined">info</span>
   <span id="info-text">Tippe auf die Zahl, um eine neue Zahl zu würfeln.</span>
 </div>
