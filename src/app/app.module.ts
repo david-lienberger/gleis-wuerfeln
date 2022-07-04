@@ -15,6 +15,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import { SafePipe } from './pipe/safe.pipe';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { InformationsComponent } from './component/informations/informations.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     PresentJourneyComponent,
     RoadmapComponent,
     FutureJourneyComponent,
-    SafePipe
+    SafePipe,
+    InformationsComponent
   ],
     imports: [
         BrowserModule,

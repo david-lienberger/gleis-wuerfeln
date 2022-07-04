@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -15,5 +15,9 @@ export class TransportApiService {
 
   autocompletion(userInput: string): Observable<any[]> {
     return this._http.get<any[]>("https://fahrplan.search.ch/api/completion.json?term=" + userInput);
+  }
+
+  fetchLiveticker(): Observable<any> {
+    return this._http.get<any>("");
   }
 }

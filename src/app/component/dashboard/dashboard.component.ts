@@ -53,7 +53,9 @@ export class DashboardComponent implements OnInit {
 
     setInterval(() => {
       this.checkArrived();
-    }, 5000)
+    }, 5000);
+
+
   }
 
   private checkArrived(): void {
@@ -95,7 +97,7 @@ export class DashboardComponent implements OnInit {
   }
 
   public newTrack(): void {
-    if (this.currentStationObj !== undefined && this.journeyStarted === false) {
+    if (this.currentStation !== '' && this.journeyStarted === false) {
       let random = Math.floor(Math.random() * this.tracks.length);
       this.track = this.tracks[random];
 
