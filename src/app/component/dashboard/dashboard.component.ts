@@ -1,11 +1,45 @@
 import { Component, OnInit } from '@angular/core';
 import {DataService} from "../../service/data.service";
 import {TransportApiService} from "../../service/transport-api.service";
+import {
+  trigger,
+  style,
+  animate,
+  transition, state,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({
+          transform: 'translateY(-100%)'
+        }),
+        animate('500ms ease-in', style({
+          transform: 'translateY(0%)'
+        }))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-out', style({
+          transform: 'translateY(-100%)'
+        }))
+      ])
+    ]),
+    trigger('slideUp', [
+      state('down', style({
+        transform: 'translateY(8rem)'
+      })),
+      transition('down => up', [
+        animate('300ms')
+      ]),
+      transition('up => down', [
+        animate('200ms')
+      ])
+    ])
+  ]
 })
 export class DashboardComponent implements OnInit {
   track: number = 0;

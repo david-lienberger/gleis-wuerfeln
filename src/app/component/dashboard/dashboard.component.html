@@ -5,7 +5,8 @@
   <span *ngIf="inTransfer; else change">Transfer</span>
   <ng-template #change>Umsteigen | Warten</ng-template>
 </div>
-<div id="input-container" *ngIf="!journeyStarted">
+<div [@slideUp]="this.currentStation === '' ? 'down':'up'" id="input-container" *ngIf="!journeyStarted">
+  <h2 *ngIf="this.currentStation === ''">Wo möchtest du starten?</h2>
   <span class="material-symbols-outlined search">location_searching</span>
   <input placeholder="Startpunkt" [(ngModel)]="currentStation" (ngModelChange)="autoComplete()" [matAutocomplete]="auto" [matTooltip]="tipStart">
   <mat-autocomplete #auto="matAutocomplete">
@@ -17,7 +18,7 @@
   </mat-autocomplete>
 </div>
 
-<div class="containers" *ngIf="!journeyStarted || changeActive">
+<div @slideInOut class="containers" *ngIf="this.currentStation !== '' && !journeyStarted || changeActive">
   <div class="container" [matTooltip]="tipTrack">
     <div>
       <h2>Gleis<span class="material-symbols-outlined">train</span></h2>
@@ -33,16 +34,16 @@
   </div>
 </div>
 
+<div class="container" id="info" *ngIf=" this.currentStation !== '' && !journeyStarted || changeActive">
+  <span class="material-symbols-outlined">info</span>
+  <span id="info-text">Tippe auf die Zahl, um eine neue Zahl zu würfeln.</span>
+</div>
+
 <div class="future-journey-container" *ngIf="journeyStarted || (track > 0 && stations > 0)">
   <app-future-journey [futureDestination]="futureDestination" [futureTrainTrack]="futureTrainTrack"
                       [changeTime]="nextChange" [xCoords]="xCoords" [yCoords]="yCoords"></app-future-journey>
   <button (click)="startJourney()" *ngIf="track > 0 && stations > 0 && !journeyStarted"
           [ngStyle]="{'cursor': this.nextChange === null ? 'not-allowed':'pointer'}" [disabled]="this.nextChange === null">Reise starten</button>
-</div>
-
-<div class="container" id="info" *ngIf="!journeyStarted || changeActive">
-  <span class="material-symbols-outlined">info</span>
-  <span id="info-text">Tippe auf die Zahl, um eine neue Zahl zu würfeln.</span>
 </div>
 
 <div class="button-container">
