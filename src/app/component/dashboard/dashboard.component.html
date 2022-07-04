@@ -34,7 +34,7 @@
   </div>
 </div>
 
-<div class="container" id="info" *ngIf=" this.currentStation !== '' && !journeyStarted || changeActive">
+<div @slideInOut class="container" id="info" *ngIf=" this.currentStation !== '' && !journeyStarted || changeActive">
   <span class="material-symbols-outlined">info</span>
   <span id="info-text">Tippe auf die Zahl, um eine neue Zahl zu würfeln.</span>
 </div>

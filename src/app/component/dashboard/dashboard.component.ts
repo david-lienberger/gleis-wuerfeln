@@ -16,7 +16,7 @@ import {
     trigger('slideInOut', [
       transition(':enter', [
         style({
-          transform: 'translateY(-100%)'
+          transform: 'translateY(300%)'
         }),
         animate('500ms ease-in', style({
           transform: 'translateY(0%)'
@@ -24,7 +24,7 @@ import {
       ]),
       transition(':leave', [
         animate('300ms ease-out', style({
-          transform: 'translateY(-100%)'
+          transform: 'translateY(500%)'
         }))
       ])
     ]),
