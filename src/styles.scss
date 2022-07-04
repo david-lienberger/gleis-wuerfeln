@@ -1,4 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
 :root {
   --font-color: #41335F;
   --accent-color: #836BDB;
@@ -7,6 +6,7 @@
 body {
   color: var(--font-color);
   font-family: basic-sans, sans-serif;
+  overflow-x: hidden;
 }
 
 input {

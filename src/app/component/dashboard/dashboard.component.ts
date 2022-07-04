@@ -82,17 +82,15 @@ export class DashboardComponent implements OnInit {
     this.checkArrived();
 
     setInterval(() => {
-      this.checkArrived();
+        this.checkArrived();
     }, 5000);
-
-
   }
 
   private checkArrived(): void {
     const now: Date = new Date();
-    const nextChange: Date = new Date(this.nextChange);
 
-    if (!this.changeActive && this.journeyStarted && (nextChange <= now)) {
+    if (this.journeyStarted && this.inTransfer && this.nextChange <= now) {
+      console.log('successful change')
       this.inTransfer = false;
 
       localStorage.setItem('change-active', 'true')
@@ -104,7 +102,8 @@ export class DashboardComponent implements OnInit {
       this.currentStation = this.futureDestination;
 
       this.getConnections();
-    } else if (!this.inTransfer && this.journeyStarted && (this.departure <= now)) {
+    } else if (this.journeyStarted && this.departure <= now) {
+      console.log('successful transfer')
       this.inTransfer = true;
 
       localStorage.setItem('change-active', 'false')
@@ -112,6 +111,10 @@ export class DashboardComponent implements OnInit {
 
       localStorage.setItem('journey-started', 'true');
       this.journeyStarted = true;
+    } else {
+      console.log(this.departure)
+      console.log(this.nextChange)
+      console.log(now)
     }
   }
 
@@ -131,7 +134,7 @@ export class DashboardComponent implements OnInit {
 
       let counter: number = 0;
       const diceTrack = setInterval(() => {
-        if (counter < 5) {
+        if (counter < 7) {
           let random = Math.floor(Math.random() * this.tracks.length);
           this.track = this.tracks[random];
           counter++;
@@ -163,10 +166,9 @@ export class DashboardComponent implements OnInit {
 
       let counter: number = 0;
       const diceStations = setInterval(() => {
-        if (counter < 5) {
+        if (counter < 7) {
           this.stations = Math.floor(Math.random() * (max) + 1);
           counter++;
-          console.log(this.stations)
         } else {
           clearInterval(diceStations);
           this.getFutureJourneyInformation();

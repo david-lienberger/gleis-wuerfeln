@@ -2,8 +2,8 @@
 
 <div id="live" *ngIf="journeyStarted">
   <div id="circle"></div>
-  <span *ngIf="inTransfer; else change">Transfer</span>
-  <ng-template #change>Umsteigen | Warten</ng-template>
+  <span *ngIf="inTransfer">Transfer</span>
+  <span *ngIf="!inTransfer">Umsteigen | Warten</span>
 </div>
 <div [@slideUp]="this.currentStation === '' ? 'down':'up'" id="input-container" *ngIf="!journeyStarted">
   <h2 *ngIf="this.currentStation === ''">Wo möchtest du starten?</h2>
