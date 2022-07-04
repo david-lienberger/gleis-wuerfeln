@@ -1,12 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {DataService} from "../../service/data.service";
 import {TransportApiService} from "../../service/transport-api.service";
-import {
-  trigger,
-  style,
-  animate,
-  transition, state,
-} from '@angular/animations';
+import {trigger, style, animate, transition, state,} from '@angular/animations';
 
 @Component({
   selector: 'app-dashboard',
@@ -70,7 +65,8 @@ export class DashboardComponent implements OnInit {
   tipTrack: string = 'Auf diesem Gleis fährt dein Zug.';
   tipStations: string = 'So viele Haltestellen passierst du.';
 
-  constructor(private _dataService: DataService, private _apiService: TransportApiService) { }
+  constructor(private _dataService: DataService, private _apiService: TransportApiService) {
+  }
 
   ngOnInit(): void {
     this.futureTrainTrack = localStorage.getItem('future-connection');
@@ -132,28 +128,50 @@ export class DashboardComponent implements OnInit {
 
   public newTrack(): void {
     if (this.currentStation !== '' && this.journeyStarted === false) {
-      let random = Math.floor(Math.random() * this.tracks.length);
-      this.track = this.tracks[random];
 
-      for (let station of this.currentStationObj.stationboard) {
-        if (parseInt(station.stop.platform) === this.track) {
-          this.maxStations = station.passList.length - 1;
-
-          if (this.stations > this.maxStations) {
-            this.stations = this.maxStations;
-          }
-
-          this.getFutureJourneyInformation();
+      let counter: number = 0;
+      const diceTrack = setInterval(() => {
+        if (counter < 5) {
+          let random = Math.floor(Math.random() * this.tracks.length);
+          this.track = this.tracks[random];
+          counter++;
+        } else {
+          clearInterval(diceTrack);
+          this.calculateMaxStations();
         }
+      }, 100);
+    }
+  }
+
+  private calculateMaxStations(): void {
+    for (let station of this.currentStationObj.stationboard) {
+      if (parseInt(station.stop.platform) === this.track) {
+        this.maxStations = station.passList.length - 1;
+
+        if (this.stations > this.maxStations) {
+          this.stations = this.maxStations;
+        }
+
+        this.getFutureJourneyInformation();
       }
     }
   }
 
   public newStation(): void {
-    if (this.currentStationObj !==  undefined && this.journeyStarted === false && this.track > 0) {
+    if (this.currentStationObj !== undefined && this.journeyStarted === false && this.track > 0) {
       let max = this.maxStations;
-      this.stations = Math.floor(Math.random() * (max) + 1);
-      this.getFutureJourneyInformation();
+
+      let counter: number = 0;
+      const diceStations = setInterval(() => {
+        if (counter < 5) {
+          this.stations = Math.floor(Math.random() * (max) + 1);
+          counter++;
+          console.log(this.stations)
+        } else {
+          clearInterval(diceStations);
+          this.getFutureJourneyInformation();
+        }
+      }, 100);
     }
   }
 
@@ -203,7 +221,7 @@ export class DashboardComponent implements OnInit {
     this.tracks = [];
     this._apiService.getConnections(this.currentStation).subscribe((data) => {
       this.currentStationObj = data;
-        data.stationboard.reverse();
+      data.stationboard.reverse();
       for (let station of data.stationboard) {
         this.tracks.push(DashboardComponent.parseTrack(station.stop.platform));
       }
@@ -224,7 +242,7 @@ export class DashboardComponent implements OnInit {
   }
 
   private static displayTime(time: Date): string {
-      return time.toLocaleTimeString().slice(0, 5);
+    return time.toLocaleTimeString().slice(0, 5);
   }
 
   public startJourney(): void {
@@ -241,7 +259,7 @@ export class DashboardComponent implements OnInit {
       stations.push({
         name: this.currentStation,
         departure: this.departure
-      },{
+      }, {
         name: this.futureDestination,
         departure: this.nextChange
       })
