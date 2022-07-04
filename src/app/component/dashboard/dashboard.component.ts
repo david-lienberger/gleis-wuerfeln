@@ -41,6 +41,7 @@ import {trigger, style, animate, transition, state,} from '@angular/animations';
     ]),
   ]
 })
+
 export class DashboardComponent implements OnInit {
   track: number = 0;
   stations: number = 0;
@@ -71,8 +72,7 @@ export class DashboardComponent implements OnInit {
   tipTrack: string = 'Auf diesem Gleis fährt dein Zug.';
   tipStations: string = 'So viele Haltestellen passierst du.';
 
-  constructor(private _dataService: DataService, private _apiService: TransportApiService) {
-  }
+  constructor(private _dataService: DataService, private _apiService: TransportApiService) { }
 
   ngOnInit(): void {
     this.futureTrainTrack = localStorage.getItem('future-connection');
