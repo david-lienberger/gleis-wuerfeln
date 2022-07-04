@@ -1,5 +1,5 @@
 <div id="flex">
-  <div style="margin-top: -2rem;">
+  <div @slideRightInOut style="margin-top: -2rem;">
     <h2>Deine Reise</h2>
     <span id="title-text">geht wie folgt weiter:</span>
     <div class="future-information" [matTooltip]="tipTrainTrack">
@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div id="map-container" [matTooltip]="tipDestination">
+  <div @slideLeftInOut id="map-container" [matTooltip]="tipDestination">
     <iframe class="map" title="map" [src]="url | safe: 'resourceUrl'"></iframe>
   </div>
 

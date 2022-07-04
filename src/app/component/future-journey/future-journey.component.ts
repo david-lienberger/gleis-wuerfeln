@@ -1,9 +1,42 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-future-journey',
   templateUrl: './future-journey.component.html',
-  styleUrls: ['./future-journey.component.scss']
+  styleUrls: ['./future-journey.component.scss'],
+  animations: [
+    trigger('slideRightInOut', [
+      transition(':enter', [
+        style({
+          transform: 'translateX(-100%)'
+        }),
+        animate('500ms ease-in', style({
+          transform: 'translateX(-0%)'
+        }))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-out', style({
+          transform: 'translateX(-300%)'
+        }))
+      ])
+    ]),
+    trigger('slideLeftInOut', [
+      transition(':enter', [
+        style({
+          transform: 'translateX(100%)'
+        }),
+        animate('500ms ease-in', style({
+          transform: 'translateX(0%)'
+        }))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-out', style({
+          transform: 'translateX(300%)'
+        }))
+      ])
+    ])
+  ]
 })
 export class FutureJourneyComponent implements OnChanges {
 
